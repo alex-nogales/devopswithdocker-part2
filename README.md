@@ -14,6 +14,6 @@ Create a  `docker-compose.yml ` file that starts  `evopsdockeruh/simple-web-serv
 Submit the  `docker-compose.yml`, make sure that it works simply by running docker-compose up if the log file exists.
 
 > Command used:
->>```% docker-compose build
+```% docker-compose build
 % docker-compose run
 ```
