@@ -13,7 +13,8 @@ Without a command  `devopsdockeruh/simple-web-service ` will create logs into it
 Create a  `docker-compose.yml ` file that starts  `evopsdockeruh/simple-web-service ` and saves the logs into your filesystem.
 Submit the  `docker-compose.yml`, make sure that it works simply by running docker-compose up if the log file exists.
 
-> Command used:
-```% docker-compose build
+#### Command used:
+```
+% docker-compose build
 % docker-compose run
 ```
