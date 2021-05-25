@@ -81,6 +81,55 @@ Submit the docker-compose.yml
 
 ![](https://docker-hy.github.io/images/exercises/back-front-redis-and-database.png)
 
+çç
+
+### 2.7
+Configure a [machine learning](https://en.wikipedia.org/wiki/Machine_learning) project.
+Look into machine learning project created with Python and React and split into three parts: [frontend](https://github.com/docker-hy/ml-kurkkumopo-frontend), [backend](https://github.com/docker-hy/ml-kurkkumopo-backend) and [training](https://github.com/docker-hy/ml-kurkkumopo-training)
+Note that the training requires 2 volumes and backend should share volume `/src/model` with training.
+The frontend will display on http://localhost:3000 and the application will tell if the subject of an image looks more like a cucumber or a moped.
+Submit the docker-compose.yml
+> This exercise is known to have broken for some attendees based on CPU. The error looks something like “Illegal instruction (core dumped)”. Try downgrading / upgrading the tensorflow found in requirements.txt or join the telegram channel and message with @jakousa.
+> Note that the generated model is a toy and will not produce good results.
+> It will take SEVERAL minutes to build the docker images, download training pictures and train the classifying model.
+This exercise was created by [Sasu Mäkinen](https://github.com/sasumaki)
+
+>> Can't do this exercise because of an error when building the image: `ERROR: Could not find a version that satisfies the requirement tensorflow==1.15 (from versions: none)`
+
+### 2.8
+Add nginx to example frontend + backend.
+![](https://docker-hy.github.io/images/exercises/back-front-redis-database-and-nginx.png)
+Accessing your service from arbitrary port is counter intuitive since browsers use 80 (http) and 443 (https) by default. And having the service refer to two origins in a case where there’s only one backend isn’t desirable either. We will skip the SSL setup for https/443.
+Nginx will function as a reverse proxy for us (see the image above). The requests arriving at anything other than /api will be redirected to frontend container and /api will get redirected to backend container.
+At the end you should see that the frontend is accessible simply by going to http://localhost and the button works. Other buttons may have stopped working, do not worry about them.
+As we will not start configuring reverse proxies on this course you can have a simple config file:
+The following file should be set to /etc/nginx/nginx.conf inside the nginx container. You can use a file volume where the contents of the file are the following:
+```
+  events { worker_connections 1024; }
+
+  http {
+    server {
+      listen 80;
+
+      location / {
+        proxy_pass _frontend-connection-url_;
+      }
+
+      location /api/ {
+        proxy_set_header Host $host;
+        proxy_pass _backend-connection-url_;
+      }
+    }
+  }
+```
+Nginx, backend and frontend should be connected in the same network. See the image above for how the services are connected.
+
+Submit the docker-compose.yml
+
+> Tips for making sure the backend connection works:
+> Try using your browser to access http://localhost/api/ping and see if it answers pong
+> It might be nginx configuration problem: Add trailing / to the backend url in the nginx.conf.
+
 #### Command used:
 ```
 % docker-compose up
