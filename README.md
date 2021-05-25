@@ -69,3 +69,19 @@ Please return the used commands for this exercise.
 ```
 % docker-compose up -d --scale compute=3
 ```
+
+### 2.6
+Add database to example backend.
+Lets use a postgres database to save messages. We won’t need to configure a volume since the official postgres image sets a default volume for us. Lets use the postgres image documentation to our advantage when configuring: https://hub.docker.com/_/postgres/. Especially part Environment Variables is of interest.
+The backend [README](https://github.com/docker-hy/material-applications/tree/main/example-backend) should have all the information needed to connect.
+The button won’t turn green but you can send messages to yourself.
+Submit the docker-compose.yml
+> TIP: When configuring the database, you might need to destroy the automatically created volumes. Use command `docker volume prune`, `docker volume ls` and `docker volume rm` to remove unused volumes when testing. Make sure to remove containers that depend on them beforehand.
+> `restart: unless-stopped` can help if the postgres takes a while to get ready
+
+![](https://docker-hy.github.io/images/exercises/back-front-redis-and-database.png)
+
+#### Command used:
+```
+% docker-compose up
+```
