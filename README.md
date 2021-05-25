@@ -36,3 +36,26 @@ As we saw previously, starting an application with two programs was not trivial 
 In the previous part we created Dockerfiles for both [frontend](https://github.com/docker-hy/material-applications/tree/main/example-frontend) and [backend](https://github.com/docker-hy/material-applications/tree/main/example-backend). Next, simplify the usage into one docker-compose.yml.
 Configure the backend and frontend from part 1 to work in docker-compose.
 Submit the docker-compose.yml
+
+#### Command used:
+```
+% docker-compose up
+```
+
+### 2.4
+Add redis to example backend.
+Redis is used to speed up some operations. Backend uses a slow api to get information. You can test the slow api by requesting /`ping?redis=true` with curl. The frontend program has a button to test this.
+Configure a redis container to cache information for the backend. Use the documentation if needed when configuring: https://hub.docker.com/_/redis/
+The backend [README](https://github.com/docker-hy/material-applications/tree/main/example-backend) should have all the information needed to connect.
+When you’ve correctly configured the button will turn green.
+Submit the docker-compose.yml
+![](https://docker-hy.github.io/images/exercises/back-front-and-redis.png)
+
+> `restart: unless-stopped` can help if the redis takes a while to get ready
+> TIP: If you’re stuck check out [tips and tricks](https://devopswithdocker.com/exercise_tricks)
+
+#### Command used:
+```
+% docker-compose up
+```
+
