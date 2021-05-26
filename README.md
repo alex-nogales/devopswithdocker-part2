@@ -99,6 +99,7 @@ This exercise was created by [Sasu Mäkinen](https://github.com/sasumaki)
 ### 2.8
 Add nginx to example frontend + backend.
 ![](https://docker-hy.github.io/images/exercises/back-front-redis-database-and-nginx.png)
+
 Accessing your service from arbitrary port is counter intuitive since browsers use 80 (http) and 443 (https) by default. And having the service refer to two origins in a case where there’s only one backend isn’t desirable either. We will skip the SSL setup for https/443.
 Nginx will function as a reverse proxy for us (see the image above). The requests arriving at anything other than /api will be redirected to frontend container and /api will get redirected to backend container.
 At the end you should see that the frontend is accessible simply by going to http://localhost and the button works. Other buttons may have stopped working, do not worry about them.
@@ -152,5 +153,19 @@ Submit the docker-compose.yml
 >> *Note: Had to delete the nginx container to make the buttons work* 
 #### Command used:
 ```
+% docker-compose up
+```
+
+### 2.10
+Some buttons may have stopped working in the frontend + backend project. Make sure that every button for exercises works.
+This may need a peek into the browsers developer consoles again like back part 1. The buttons of nginx exercise and the first button behave differently but you want them to match.
+If you had to do any changes explain what you had to change.
+Submit the docker-compose yml and both dockerfiles.
+
+>> *Note: Had to remove the port definition from `ENV REQUEST_ORIGIN http://localhost:5000 -> ENV REQUEST_ORIGIN http://localhost` in example-backend image and rebuild it, also fix a bug with my last nginx.conf, it was pointing to backend port 8000 instead of 8080*
+
+#### Command used:
+```
+% docker build . -t example-backend
 % docker-compose up
 ```
